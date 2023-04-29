@@ -8,6 +8,7 @@ document.addEventListener('click', async function(event) {
     console.log("---");
 
     const data = {
+      "event":  "click",
       "id":     event.target.id,
       "txt":    event.target.textContent.trim(),
       "class":  event.target.className,
@@ -15,6 +16,7 @@ document.addEventListener('click', async function(event) {
       "alt":    event.target.alt,
       "tag":    event.target.tagName
     };
+    console.log(data);
 
     const response = await new Promise(resolve => {
       chrome.runtime.sendMessage({
