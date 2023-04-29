@@ -1,15 +1,7 @@
-let history = [];
 let startRecording = performance.now();
 let recording = true;
 
 const capture = async (ev_title, event) => {
-  console.log(window.location.toString(), "id:", event.target.id);
-  console.log(window.location.toString(), "txt:", event.target.textContent.trim());
-  console.log(window.location.toString(), "class:", event.target.className);
-  console.log(window.location.toString(), "name:", event.target.name);
-  console.log(window.location.toString(), "alt:", event.target.name);
-  console.log("---");
-
   const data = {
     "event":  ev_title,
     "id":     event.target.id,
@@ -22,22 +14,22 @@ const capture = async (ev_title, event) => {
     "url":    window.location.href,
     "time":   (performance.now() - startRecording) / 1000
   };
-  history.push(data);
-  console.log(history);
+  myHistory.push(data);
+  console.log(myHistory);
 
   const response = await new Promise(resolve => {
     chrome.runtime.sendMessage({
       info: data,
     }, resolve)
   });
-
-  chrome.runtime.sendMessage({ type: 'record_data', data });
-  console.log(response);
+  console.log("post send")
+  console.log("da res:", response);
 };
 
 const events = ["click", "keyup", "load"];
 events.forEach(event => document.addEventListener(event, (ev) => capture(event, ev)));
 
+/*
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'startRecording') {
     const audioChunks = [];
@@ -74,3 +66,4 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       });
   }
 });
+*/
